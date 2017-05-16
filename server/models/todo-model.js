@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
-var todoschema = mongoose.model('todo', {
+var todoschema = mongoose.model('todos', {
   text: {
     type: String,
     required: true,
