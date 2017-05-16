@@ -48,7 +48,7 @@ app.get('/todos/:id', (req, res) => {
 });
 
 
-app.listen(PORT, (e) => {
+app.listen(port, (e) => {
   if(e) {
     return console.log('Failed to listen to server');
   }

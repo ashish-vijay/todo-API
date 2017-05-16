@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
-//var dbname = 'mongodb://localhost:27017/todoAPI';
+var dbname = process.env.MONGODB_URI || 'mongodb://localhost:27017/todoAPI';
 
-mongoose.connect('mongodb://zueore:ashish`1@ds035059.mlab.com:35059/todoapp', (e) => {
+mongoose.connect(dbname, (e) => {
   if (e) throw e;
   console.log('Database connected');
 });

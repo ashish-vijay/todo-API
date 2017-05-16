@@ -7,7 +7,7 @@ var todoschema = mongoose.model('todo', {
     type: String,
     required: true,
     trim: true,
-    minlength:
+    minlength: 5
   },
   completed: {
     type: Boolean,
