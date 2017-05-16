@@ -8,7 +8,7 @@ var {userschema} = require('./models/user-model');
 var {todoschema} = require('./models/todo-model.js');
 
 var app = express();
-//var port = process.env.PORT;
+var port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
@@ -43,14 +43,14 @@ app.get('/todos/:id', (req, res) => {
       }
       res.status(200).send(JSON.stringify(todos, undefined, 2));
     }).catch((err) => {
-      res.status(400).send({
-        Error: 'Failed to fetch'
-      });
+      res.status(400).send();
     });
 });
 
 
-app.listen(3000, (e) => {
-  if(e) throw e;
+app.listen(PORT, (e) => {
+  if(e) {
+    return console.log('Failed to listen to server');
+  }
   console.log('Server is listenting');
 });

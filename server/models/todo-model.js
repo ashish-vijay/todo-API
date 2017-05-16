@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
-var todoschema = mongoose.model('todos', {
+var todoschema = mongoose.model('todo', {
   text: {
     type: String,
     required: true,
     trim: true,
-    minlength: 4
+    minlength:
   },
   completed: {
     type: Boolean,
