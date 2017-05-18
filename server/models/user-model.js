@@ -31,11 +31,7 @@ var UserSchema = new mongoose.Schema({
       type: String,
       required: true
     }
-  }],
-  _creator: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true
-  }
+  }]
 });
 
 UserSchema.methods.toJSON = function() {
