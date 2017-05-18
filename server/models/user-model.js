@@ -31,7 +31,11 @@ var UserSchema = new mongoose.Schema({
       type: String,
       required: true
     }
-  }]
+  }],
+  _creator: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
+  }
 });
 
 UserSchema.methods.toJSON = function() {
@@ -44,7 +48,7 @@ UserSchema.methods.toJSON = function() {
 UserSchema.methods.generateAuthToken = function() {
   var user = this;
   var access = 'auth';
-  var token = jwt.sign({_id: user._id.toHexString(), access}, 'abc123').toString();
+  var token = jwt.sign({_id: user._id.toHexString(), access}, process.env.JWT_SALT).toString();
 
   user.tokens.push({access, token});
 
@@ -68,7 +72,7 @@ UserSchema.statics.findByToken = function(token) {
   var decoded;
 
   try {
-    decoded = jwt.verify(token, 'abc123');
+    decoded = jwt.verify(token, process.env.JWT_SALT);
   } catch(e) {
     return Promise.reject();
   }
