@@ -7,7 +7,8 @@ var {ObjectID} = require('mongodb');
 
 var {mongoose} = require('./database/mongoose');
 var {userschema} = require('./models/user-model');
-var {todoschema} = require('./models/todo-model.js');
+var {todoschema} = require('./models/todo-model');
+var {authenticate} = require('./middleware/authenticate');
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -102,6 +103,11 @@ app.post('/users', (req, res) => {
   }).catch((e) => {
     res.status(400).send(e);
   });
+});
+
+
+app.get('/users/me', authenticate, (req, res) => {
+  res.send(req.user);
 });
 
 
