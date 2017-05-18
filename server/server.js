@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const _ = require('lodash');
+const jwt = require('jsonwebtoken');
 
 var {ObjectID} = require('mongodb');
 
@@ -10,6 +11,7 @@ var {todoschema} = require('./models/todo-model.js');
 
 var app = express();
 var port = process.env.PORT || 3000;
+
 
 app.use(bodyParser.json());
 
@@ -89,10 +91,23 @@ app.patch('/todos/:id', (req, res) => {
   });
 });
 
+app.post('/users', (req, res) => {
+  var body = _.pick(req.body, ['email', 'password']);
+  var user = new userschema(body);
+
+  user.save().then(() => {
+    return user.generateAuthToken();
+  }).then((token) => {
+    res.header('x-auth', token).status(200).send(user);
+  }).catch((e) => {
+    res.status(400).send(e);
+  });
+});
+
 
 app.listen(port, (e) => {
   if(e) {
     return console.log('Failed to listen to server');
   }
-  console.log('Server is listenting');
+  console.log('Server is listenting to port : ' + port);
 });
